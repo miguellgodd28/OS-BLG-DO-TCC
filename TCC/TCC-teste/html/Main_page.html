@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/Main_page.css">
+    <link rel="icon" type="image/png" href="../image/Imagem_da_guia.png " sizes="64x64" href="favicon-64x64.png">
+    <script src="../js/teste_fixed_v2.js"></script>
+</head>
+    <body>
+        <!-- Header -->
+        <header>
+
+            <!-- Barra superior -->
+            <section class="top-bar">
+              <ul>
+                <li><a href="../html/First_page.html">Home</a></li>
+                <li><a href="../html/Main_page.html">Monte seu Café</a></li>
+                <li><a href="../html/blog.html">Sobre Nós</a></li>
+                <li><a href="#fale-conosco">Fale Conosco</a></li>
+                <li><a href="../html/login.html">Minha conta</a></li>
+              </ul>
+            </section>
+      
+            <!-- Logo, busca e carrinho -->
+            <section class="header-main">
+      
+              <div class="Logo_container">
+                <img src="../image/Logo.png" class="Logo_image">
+              </div>
+      
+              <div class="search-cart">
+                <input type="text" class="search-box" placeholder="Search">
+                <button class="search-btn"><img src="../image/Search.png" alt="" class="Search_img"></button>
+                <div class="cart">🛒 0 item(s) - $0.00</div>
+              </div>
+      
+            </section>
+      
+            <!-- Categorias -->
+            <nav class="nav-categories">
+              <a href="#">ESPRESSO</a>
+              <a href="#">CAPPUCCINO</a>
+              <a href="#">FRAPPE</a>
+              <a href="#">CUBAN COFFEE</a>
+              <a href="#">ICED COFFEE</a>
+            </nav>
+      
+        </header>
+
+        <!-- MAIN CONTENT -->
+        <main>
+            <section class="Custom_backgroud">
+
+                <!-- Tipos de bebidas -->
+                <h3 class="Main_text">Tipos de bebidas</h3>
+                <section class="Type_drink">
+        
+                    <!-- seta esquerda -->
+                    <button id="coffeeLeftArrow" class="ArrowBtn LeftArrowClass" type="button" aria-label="Ver cafés anteriores">
+                      <!-- ícone SVG -->
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                      </svg>
+                    </button>
+            
+                    <!-- container rolável -->
+                    <div id="coffeeContainer" class="coffee-scroller" aria-label="Lista de tipos de bebida" tabindex="0">
+                      <button type="button" onclick="selectCoffeeType('expresso', 8.50)" class="btn_Custom_backgroud">
+                        <div class="Img_expreso"><img src="../image/Classic_coffe.png" alt="Expresso"></div>
+                        <div class="font-medium">Expresso</div>
+                        <div class="Value_drink">R$ 8,50</div>
+                      </button>
+                      <button type="button" onclick="selectCoffeeType('americano', 15.00)" class="btn_Custom_backgroud">
+                        <div class="Img_expreso"><img src="../image/Classic_coffe.png" alt="Americano"></div>
+                        <div class="font-medium">Americano</div>
+                        <div class="Value_drink">R$ 15,00</div>
+                      </button>
+                      <button type="button" onclick="selectCoffeeType('cappuccino', 12.00)" class="btn_Custom_backgroud">
+                        <div class="Img_expreso"><img src="../image/Classic_coffe.png" alt="Cappuccino"></div>
+                        <div class="font-medium">Cappuccino</div>
+                        <div class="Value_drink">R$ 12,00</div>
+                      </button>
+                      <button type="button" onclick="selectCoffeeType('latte', 13.50)" class="btn_Custom_backgroud">
+                        <div class="Img_expreso"><img src="../image/Classic_coffe.png" alt="Latte"></div>
+                        <div class="font-medium">Latte</div>
+                        <div class="Value_drink">R$ 13,50</div>
+                      </button>
+                      <button type="button" onclick="selectCoffeeType('mocha', 15.00)" class="btn_Custom_backgroud">
+                        <div class="Img_expreso"><img src="../image/Classic_coffe.png" alt="Mocha"></div>
+                        <div class="font-medium">Mocha</div>
+                        <div class="Value_drink">R$ 15,00</div>
+                      </button>
+                      <button type="button" onclick="selectCoffeeType('ristretto', 10.00)" class="btn_Custom_backgroud">
+                        <div class="Img_expreso"><img src="../image/Classic_coffe.png" alt="Ristretto"></div>
+                        <div class="font-medium">Ristretto</div>
+                        <div class="Value_drink">R$ 10,00</div>
+                      </button>
+                      <button type="button" onclick="selectCoffeeType('macchiato', 11.00)" class="btn_Custom_backgroud">
+                        <div class="Img_expreso"><img src="../image/Classic_coffe.png" alt="Macchiato"></div>
+                        <div class="font-medium">Macchiato</div>
+                        <div class="Value_drink">R$ 11,00</div>
+                      </button>
+                    </div>
+            
+                    <!-- seta direita -->
+                    <button id="coffeeRightArrow" class="ArrowBtn RightArrowClass" type="button" aria-label="Ver próximos cafés">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                      </svg>
+                    </button>
+
+                </section>
+
+                <!-- Tamanho do copo -->
+                <h3>Tamanho do copo</h3>
+                <section class="Cup_size">
+                    <button onclick="selectSize('pequeno', 0)" class="btn_Custom_backgroud">
+                        <div class="Size_image"><img src="../image/Imagem_generica.png" alt="" srcset=""></div>
+                        Pequeno (+R$ 0,00)
+                    </button>
+                    <button onclick="selectSize('medio', 2.50)" class="btn_Custom_backgroud">
+                        <div class="Size_image"><img src="../image/Imagem_generica.png" alt="" srcset=""></div>
+                        Médio (+R$ 2,50)
+                    </button>
+                    <button onclick="selectSize('grande', 4.00)" class="btn_Custom_backgroud">
+                        <div class="Size_image"><img src="../image/Imagem_generica.png" alt="" srcset=""></div>
+                        Grande (+R$ 4,00)
+                    </button>
+                </section>
+
+                <!-- Tipo de leite -->
+                <h3>Tipo de Leite</h3>
+                <section class="Milk_type">
+                    <button onclick="selectMilk('integral', 0)" class="milk-btn bg-blue-100 hover:bg-blue-200 p-3 rounded-lg border-2 border-transparent hover:border-blue-400 transition-all">
+                        <div class="font-medium">Integral</div>
+                        <div class="text-sm text-gray-600">Grátis</div>
+                    </button>
+                    <button onclick="selectMilk('desnatado', 0)" class="milk-btn bg-blue-100 hover:bg-blue-200 p-3 rounded-lg border-2 border-transparent hover:border-blue-400 transition-all">
+                        <div class="font-medium">Desnatado</div>
+                        <div class="text-sm text-gray-600">Grátis</div>
+                    </button>
+                    <button onclick="selectMilk('amêndoa', 3.00)" class="milk-btn bg-blue-100 hover:bg-blue-200 p-3 rounded-lg border-2 border-transparent hover:border-blue-400 transition-all">
+                        <div class="font-medium">Amêndoa</div>
+                        <div class="text-sm text-gray-600">+R$ 3,00</div>
+                    </button>
+                    <button onclick="selectMilk('aveia', 2.50)" class="milk-btn bg-blue-100 hover:bg-blue-200 p-3 rounded-lg border-2 border-transparent hover:border-blue-400 transition-all">
+                        <div class="font-medium">Aveia</div>
+                        <div class="text-sm text-gray-600">+R$ 2,50</div>
+                    </button>
+                </section>
+
+                <!-- Adocante -->
+                <h3>Tipo de acodocante</h3>
+                <section class="flex gap-3">
+                    <button onclick="selectSweetener('açúcar', 0)" class="sweetener-btn bg-pink-100 hover:bg-pink-200 px-4 py-2 rounded-lg border-2 border-transparent hover:border-pink-400 transition-all">
+                        Açúcar (Grátis)
+                    </button>
+                    <button onclick="selectSweetener('stevia', 1.50)" class="sweetener-btn bg-pink-100 hover:bg-pink-200 px-4 py-2 rounded-lg border-2 border-transparent hover:border-pink-400 transition-all">
+                        Stevia (+R$ 1,50)
+                    </button>
+                    <button onclick="selectSweetener('mel', 2.00)" class="sweetener-btn bg-pink-100 hover:bg-pink-200 px-4 py-2 rounded-lg border-2 border-transparent hover:border-pink-400 transition-all">
+                        Mel (+R$ 2,00)
+                    </button>
+                </section>
+
+                <!-- Tipos de Adicionais -->
+                <h3>Tipos de Adicionais</h3>
+                <section class="Extras">
+                    <label class="flavor-checkbox bg-purple-100 hover:bg-purple-200 p-3 rounded-lg cursor-pointer transition-all">
+                        <input type="checkbox" onchange="toggleFlavor('baunilha', 2.50)" class="mr-2">
+                        <span class="font-medium">Baunilha (+R$ 2,50)</span>
+                    </label>
+                    <label class="flavor-checkbox bg-purple-100 hover:bg-purple-200 p-3 rounded-lg cursor-pointer transition-all">
+                        <input type="checkbox" onchange="toggleFlavor('caramelo', 3.00)" class="mr-2">
+                        <span class="font-medium">Caramelo (+R$ 3,00)</span>
+                    </label>
+                    <label class="flavor-checkbox bg-purple-100 hover:bg-purple-200 p-3 rounded-lg cursor-pointer transition-all">
+                        <input type="checkbox" onchange="toggleFlavor('chocolate', 2.50)" class="mr-2">
+                        <span class="font-medium">Chocolate (+R$ 2,50)</span>
+                    </label>
+                </section>
+            </section>
+        </main>
+    </body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ICoffee Blog</title>
+    <link rel="stylesheet" href="../CSS/blog.css" />
+    <link rel="icon" type="image/png" href="../image/Imagem_da_guia.png " sizes="64x64" href="favicon-64x64.png">
+</head>
+    <body>
+        <!-- Header -->
+        <header>
+
+            <!-- Barra superior -->
+            <section class="top-bar">
+            <ul>
+                <li><a href="../html/First_page.html">Home</a></li>
+                <li><a href="../html/Main_page.html">Monte seu Café</a></li>
+                <li><a href="../html/blog.html">Sobre Nós</a></li>
+                <li><a href="#fale-conosco">Fale Conosco</a></li>
+                <li><a href="../html/login.html">Minha conta</a></li>
+            </ul>
+            </section>
+    
+            <!-- Logo, busca e carrinho -->
+            <section class="header-main">
+    
+            <div class="Logo_container">
+                <img src="../image/Logo.png" class="Logo_image">
+            </div>
+    
+            <div class="search-cart">
+                <input type="text" class="search-box" placeholder="Search">
+                <button class="search-btn"><img src="../image/Search.png" alt="" class="Search_img"></button>
+                <div class="cart">🛒 0 item(s) - $0.00</div>
+            </div>
+    
+            </section>
+    
+            <!-- Categorias -->
+            <nav class="nav-categories">
+            <a href="#">ESPRESSO</a>
+            <a href="#">CAPPUCCINO</a>
+            <a href="#">FRAPPE</a>
+            <a href="#">CUBAN COFFEE</a>
+            <a href="#">ICED COFFEE</a>
+            </nav>
+    
+        </header>
+
+        <!-- MAIN CONTENT -->
+        <main class="container">
+            <main class="blog-posts">
+
+                <!-- Post 1: Café Perfeito -->
+                <article class="post" id="Post_1">
+                    <img src="../IMAGE/Brown White Simple Coffee Logo (1).png" alt="Café Perfeito" class="post-image"/>
+                    <h2>Como Preparar o Café Perfeito</h2>
+                    <p>Aprenda dicas essenciais para fazer o café perfeito em casa...</p>
+                    <a href="#" class="btn-leia-mais" onclick="toggleContent(event, 'cafe-perfeito')"> Ler mais</a>
+                    <div id="cafe-perfeito" class="conteudo-extra">
+                        <p><strong>Receita do Cappuccino Perfeito:</strong></p>
+                        <ol>
+                            <li><strong>Ingredientes:</strong>
+                                <ul>
+                                    <li>1 xícara de café expresso (30 ml)</li>
+                                    <li>1/2 xícara de leite (120 ml)</li>
+                                    <li>1 colher de sopa de açúcar (opcional)</li>
+                                    <li>Cacau ou canela em pó para polvilhar</li>
+                                </ul>
+                            </li>
+                            <li><strong>Preparo do leite:</strong>
+                                <ul>
+                                    <li>Aqueça o leite em fogo médio, sem deixar ferver.</li>
+                                    <li>Bata o leite com um batedor ou vaporizador até formar espuma cremosa.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Montagem do cappuccino:</strong>
+                                <ul>
+                                    <li>Coloque o café expresso em uma xícara.</li>
+                                    <li>Adicione o leite aquecido, segurando a espuma com uma colher.</li>
+                                    <li>Finalize cobrindo com a espuma e polvilhe cacau ou canela por cima.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Dicas finais:</strong>
+                                <ul>
+                                    <li>Use sempre café fresco e leite de boa qualidade.</li>
+                                    <li>Ajuste a proporção de café, leite e espuma ao seu gosto.</li>
+                                    <li>Sirva imediatamente para apreciar o aroma e sabor no auge.</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+                </article>
+
+                <!-- Post 2: Tipos de Leite -->
+                <article class="post">
+                    <img src="../IMAGE/tipos-leite.png" alt="Tipos de Leite" class="post-image"/>
+                    <h2>Tipos de Leite e Seus Efeitos no Sabor</h2>
+                    <p>Descubra como diferentes tipos de leite podem mudar o sabor do seu café...</p>
+                    <a href="#" class="btn-leia-mais" onclick="toggleContent(event, 'tipos-leite')"> Ler mais</a>
+                    <div id="tipos-leite" class="conteudo-extra">
+                        <p><strong>Tipos de Leite e Seus Efeitos no Sabor do Café:</strong></p>
+                        <ol>
+                            <li><strong>Leite Integral:</strong>
+                                <ul>
+                                    <li>Deixa o café mais cremoso e suave.</li>
+                                    <li>Combina bem com cappuccino e latte.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Leite Desnatado:</strong>
+                                <ul>
+                                    <li>Mais leve, mas menos cremoso.</li>
+                                    <li>Ideal para quem quer reduzir calorias sem abrir mão do café.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Leite Semidesnatado:</strong>
+                                <ul>
+                                    <li>Equilíbrio entre sabor e leveza.</li>
+                                    <li>Bom para cafés com espuma média, como flat white.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Leites Vegetais:</strong>
+                                <ul>
+                                    <li><strong>Leite de Amêndoas:</strong> sabor suave e levemente adocicado.</li>
+                                    <li><strong>Leite de Aveia:</strong> muito cremoso e perfeito para cappuccinos veganos.</li>
+                                    <li><strong>Leite de Soja:</strong> mais neutro, bom para quem busca proteína vegetal.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Dicas finais:</strong>
+                                <ul>
+                                    <li>Escolha o leite que combine com o tipo de café que você vai preparar.</li>
+                                    <li>Experimente misturas diferentes para descobrir seu sabor favorito.</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+                </article>
+
+                <!-- Post 3: História do Café -->
+                <article class="post">
+                    <img src="../IMAGE/historia-cafe.png" alt="História do Café" class="post-image"/>
+                    <h2>História do Café</h2>
+                    <p>Descubra a história dessa bebida e como se tornou uma das mais apreciadas ao redor do mundo.</p>
+                    <a href="#" class="btn-leia-mais" onclick="toggleContent(event, 'historia-cafe')">Ler mais</a>
+                    <div id="historia-cafe" class="conteudo-extra">
+                        <p>O café teve origem na Etiópia, sendo descoberto por pastores de cabras...</p>
+                        <p>Com o tempo, espalhou-se para o mundo árabe, Europa e América, tornando-se uma bebida apreciada globalmente.
+                        Hoje, existem diversas variedades de café, métodos de preparo e culturas em torno dessa bebida.
+                    </div>
+                </article>
+            </main>
+        </main>
+
+        <!-- FOOTER -->
+        <footer id="fale-conosco">
+            <div class="footer-col">
+              <h4>Institucional</h4>
+              <ul>
+                <li><a href="#sobre-nos">Sobre Nós</a></li>
+                <li><a href="#">Política de Privacidade</a></li>
+                <li><a href="#">Trabalhe Conosco</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <!-- <h4>Navegação</h4>
+              <ul>
+                <li><a href="#">Início</a></li>
+                <li><a href="#monte-seu-cafe">Monte seu Café</a></li>
+                <li><a href="#fale-conosco">Fale Conosco</a></li>
+              </ul> -->
+            </div>
+            <div class="footer-col">
+              <h4>Redes Sociais</h4>
+              <div class="footer-social">
+                <img src="../image/X_image.jpeg" alt="X_image" />
+                <img src="../image/Facebook_image.jpeg" alt="Facebook_image" />
+                <img src="../image/Instragram_image.jpeg" alt="Instragram_image" />
+              </div>
+            </div>
+            <div class="footer-bottom">
+              <p>© 2025 Icoffee – Todos os direitos reservados. Feito com ☕ e paixão por café.</p>
+            </div>
+        </footer>
+    </body>
+    <script>
+        <!-- Script para mostrar/esconder o conteúdo -->
+        function toggleContent(event, id) {
+            event.preventDefault();
+            const conteudo = document.getElementById(id);
+            conteudo.style.display = conteudo.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
+</html>

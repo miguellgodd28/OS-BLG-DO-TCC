@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CaféCustom - Personalize sua Bebida</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fillCup {
+            from { height: 0%; }
+            to { height: var(--fill-height); }
+        }
+        
+        @keyframes addTopping {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .coffee-fill {
+            animation: fillCup 0.8s ease-out forwards;
+        }
+        
+        .topping-animation {
+            animation: addTopping 0.5s ease-out forwards;
+        }
+        
+        .cup-container {
+            position: relative;
+            width: 120px;
+            height: 160px;
+            margin: 0 auto;
+        }
+        
+        .status-pulse {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-amber-50 to-orange-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-amber-900 text-white p-4 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">☕ CaféCustom</h1>
+            <div class="flex gap-4">
+                <button onclick="showLogin()" class="bg-amber-700 hover:bg-amber-600 px-4 py-2 rounded-lg transition-colors">
+                    Entrar
+                </button>
+                <button onclick="showAdmin()" class="bg-orange-600 hover:bg-orange-500 px-4 py-2 rounded-lg transition-colors">
+                    Admin
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto p-6">
+        <!-- Main Content -->
+        <div id="mainContent" class="grid lg:grid-cols-3 gap-8">
+            <!-- Customization Panel -->
+            <div class="lg:col-span-2 bg-white rounded-xl shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-amber-900 mb-6">Personalize sua Bebida</h2>
+                
+                <!-- Coffee Type -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3">Tipo de Café</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <button onclick="selectCoffeeType('expresso', 8.50)" class="coffee-type-btn bg-amber-100 hover:bg-amber-200 p-3 rounded-lg border-2 border-transparent hover:border-amber-400 transition-all">
+                            <div class="text-2xl mb-1">☕</div>
+                            <div class="font-medium">Expresso</div>
+                            <div class="text-sm text-gray-600">R$ 8,50</div>
+                        </button>
+                        <button onclick="selectCoffeeType('cappuccino', 12.00)" class="coffee-type-btn bg-amber-100 hover:bg-amber-200 p-3 rounded-lg border-2 border-transparent hover:border-amber-400 transition-all">
+                            <div class="text-2xl mb-1">🥛</div>
+                            <div class="font-medium">Cappuccino</div>
+                            <div class="text-sm text-gray-600">R$ 12,00</div>
+                        </button>
+                        <button onclick="selectCoffeeType('latte', 13.50)" class="coffee-type-btn bg-amber-100 hover:bg-amber-200 p-3 rounded-lg border-2 border-transparent hover:border-amber-400 transition-all">
+                            <div class="text-2xl mb-1">🍼</div>
+                            <div class="font-medium">Latte</div>
+                            <div class="text-sm text-gray-600">R$ 13,50</div>
+                        </button>
+                        <button onclick="selectCoffeeType('mocha', 15.00)" class="coffee-type-btn bg-amber-100 hover:bg-amber-200 p-3 rounded-lg border-2 border-transparent hover:border-amber-400 transition-all">
+                            <div class="text-2xl mb-1">🍫</div>
+                            <div class="font-medium">Mocha</div>
+                            <div class="text-sm text-gray-600">R$ 15,00</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Size -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3">Tamanho</h3>
+                    <div class="flex gap-3">
+                        <button onclick="selectSize('pequeno', 0)" class="size-btn bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-lg border-2 border-transparent hover:border-gray-400 transition-all">
+                            Pequeno (+R$ 0,00)
+                        </button>
+                        <button onclick="selectSize('medio', 2.50)" class="size-btn bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-lg border-2 border-transparent hover:border-gray-400 transition-all">
+                            Médio (+R$ 2,50)
+                        </button>
+                        <button onclick="selectSize('grande', 4.00)" class="size-btn bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-lg border-2 border-transparent hover:border-gray-400 transition-all">
+                            Grande (+R$ 4,00)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Milk Type -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3">Tipo de Leite</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <button onclick="selectMilk('integral', 0)" class="milk-btn bg-blue-100 hover:bg-blue-200 p-3 rounded-lg border-2 border-transparent hover:border-blue-400 transition-all">
+                            <div class="font-medium">Integral</div>
+                            <div class="text-sm text-gray-600">Grátis</div>
+                        </button>
+                        <button onclick="selectMilk('desnatado', 0)" class="milk-btn bg-blue-100 hover:bg-blue-200 p-3 rounded-lg border-2 border-transparent hover:border-blue-400 transition-all">
+                            <div class="font-medium">Desnatado</div>
+                            <div class="text-sm text-gray-600">Grátis</div>
+                        </button>
+                        <button onclick="selectMilk('amêndoa', 3.00)" class="milk-btn bg-blue-100 hover:bg-blue-200 p-3 rounded-lg border-2 border-transparent hover:border-blue-400 transition-all">
+                            <div class="font-medium">Amêndoa</div>
+                            <div class="text-sm text-gray-600">+R$ 3,00</div>
+                        </button>
+                        <button onclick="selectMilk('aveia', 2.50)" class="milk-btn bg-blue-100 hover:bg-blue-200 p-3 rounded-lg border-2 border-transparent hover:border-blue-400 transition-all">
+                            <div class="font-medium">Aveia</div>
+                            <div class="text-sm text-gray-600">+R$ 2,50</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sweetener -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3">Adoçante</h3>
+                    <div class="flex gap-3">
+                        <button onclick="selectSweetener('açúcar', 0)" class="sweetener-btn bg-pink-100 hover:bg-pink-200 px-4 py-2 rounded-lg border-2 border-transparent hover:border-pink-400 transition-all">
+                            Açúcar (Grátis)
+                        </button>
+                        <button onclick="selectSweetener('stevia', 1.50)" class="sweetener-btn bg-pink-100 hover:bg-pink-200 px-4 py-2 rounded-lg border-2 border-transparent hover:border-pink-400 transition-all">
+                            Stevia (+R$ 1,50)
+                        </button>
+                        <button onclick="selectSweetener('mel', 2.00)" class="sweetener-btn bg-pink-100 hover:bg-pink-200 px-4 py-2 rounded-lg border-2 border-transparent hover:border-pink-400 transition-all">
+                            Mel (+R$ 2,00)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Flavors -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3">Sabores Adicionais</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                        <label class="flavor-checkbox bg-purple-100 hover:bg-purple-200 p-3 rounded-lg cursor-pointer transition-all">
+                            <input type="checkbox" onchange="toggleFlavor('baunilha', 2.50)" class="mr-2">
+                            <span class="font-medium">Baunilha (+R$ 2,50)</span>
+                        </label>
+                        <label class="flavor-checkbox bg-purple-100 hover:bg-purple-200 p-3 rounded-lg cursor-pointer transition-all">
+                            <input type="checkbox" onchange="toggleFlavor('caramelo', 3.00)" class="mr-2">
+                            <span class="font-medium">Caramelo (+R$ 3,00)</span>
+                        </label>
+                        <label class="flavor-checkbox bg-purple-100 hover:bg-purple-200 p-3 rounded-lg cursor-pointer transition-all">
+                            <input type="checkbox" onchange="toggleFlavor('chocolate', 2.50)" class="mr-2">
+                            <span class="font-medium">Chocolate (+R$ 2,50)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Toppings -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3">Coberturas</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                        <label class="topping-checkbox bg-green-100 hover:bg-green-200 p-3 rounded-lg cursor-pointer transition-all">
+                            <input type="checkbox" onchange="toggleTopping('chantilly', 3.50)" class="mr-2">
+                            <span class="font-medium">Chantilly (+R$ 3,50)</span>
+                        </label>
+                        <label class="topping-checkbox bg-green-100 hover:bg-green-200 p-3 rounded-lg cursor-pointer transition-all">
+                            <input type="checkbox" onchange="toggleTopping('marshmallow', 2.00)" class="mr-2">
+                            <span class="font-medium">Marshmallow (+R$ 2,00)</span>
+                        </label>
+                        <label class="topping-checkbox bg-green-100 hover:bg-green-200 p-3 rounded-lg cursor-pointer transition-all">
+                            <input type="checkbox" onchange="toggleTopping('calda', 2.50)" class="mr-2">
+                            <span class="font-medium">Calda (+R$ 2,50)</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Preview -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h3 class="text-xl font-bold text-amber-900 mb-4">Sua Bebida</h3>
+                
+                <!-- Cup Visualization -->
+                <div class="cup-container mb-6">
+                    <svg viewBox="0 0 120 160" class="w-full h-full">
+                        <!-- Cup -->
+                        <path d="M20 40 L100 40 L95 140 L25 140 Z" fill="#f3f4f6" stroke="#d1d5db" stroke-width="2"/>
+                        
+                        <!-- Coffee Fill -->
+                        <path id="coffeeFill" d="M22 42 L98 42 L93 138 L27 138 Z" fill="#8b4513" style="height: 0%; --fill-height: 0%;" class="coffee-fill"/>
+                        
+                        <!-- Milk Layer -->
+                        <path id="milkLayer" d="M22 42 L98 42 L96 80 L24 80 Z" fill="#f5f5dc" opacity="0" class="transition-opacity duration-500"/>
+                        
+                        <!-- Toppings -->
+                        <g id="toppings">
+                            <!-- Chantilly -->
+                            <ellipse id="chantilly" cx="60" cy="35" rx="25" ry="8" fill="#ffffff" opacity="0" class="topping-animation"/>
+                            <!-- Marshmallow -->
+                            <rect id="marshmallow" x="50" y="30" width="20" height="8" rx="4" fill="#ffb6c1" opacity="0" class="topping-animation"/>
+                            <!-- Calda -->
+                            <path id="calda" d="M40 35 Q60 25 80 35" stroke="#8b4513" stroke-width="3" fill="none" opacity="0" class="topping-animation"/>
+                        </g>
+                        
+                        <!-- Cup Handle -->
+                        <path d="M100 60 Q115 60 115 80 Q115 100 100 100" fill="none" stroke="#d1d5db" stroke-width="3"/>
+                    </svg>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="bg-gray-50 rounded-lg p-4 mb-4">
+                    <h4 class="font-semibold mb-2">Resumo do Pedido:</h4>
+                    <div id="orderSummary" class="text-sm text-gray-600">
+                        <p>Selecione um tipo de café para começar</p>
+                    </div>
+                </div>
+
+                <!-- Price -->
+                <div class="text-center mb-4">
+                    <div class="text-2xl font-bold text-amber-900" id="totalPrice">R$ 0,00</div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="space-y-3">
+                    <button onclick="addToFavorites()" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-lg transition-colors">
+                        ⭐ Salvar como Favorito
+                    </button>
+                    <button onclick="placeOrder()" class="w-full bg-amber-600 hover:bg-amber-700 text-white py-3 px-4 rounded-lg font-semibold transition-colors">
+                        🛒 Fazer Pedido
+                    </button>
+                </div>
+
+                <!-- Order Status -->
+                <div id="orderStatus" class="mt-6 p-4 bg-blue-50 rounded-lg hidden">
+                    <h4 class="font-semibold text-blue-900 mb-2">Status do Pedido:</h4>
+                    <div class="flex items-center">
+                        <div id="statusIndicator" class="w-3 h-3 bg-blue-500 rounded-full mr-2 status-pulse"></div>
+                        <span id="statusText" class="text-blue-800">Pedido enviado para a cozinha</span>
+                    </div>
+                    <div class="mt-2 text-sm text-blue-600">
+                        Pedido #<span id="orderNumber">001</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Account Section -->
+        <div id="userAccount" class="hidden mt-8 grid md:grid-cols-2 gap-8">
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h3 class="text-xl font-bold text-amber-900 mb-4">Pedidos Favoritos</h3>
+                <div id="favoritesList" class="space-y-3">
+                    <p class="text-gray-500">Nenhum favorito salvo ainda</p>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h3 class="text-xl font-bold text-amber-900 mb-4">Histórico de Pedidos</h3>
+                <div id="orderHistory" class="space-y-3">
+                    <p class="text-gray-500">Nenhum pedido anterior</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Panel -->
+        <div id="adminPanel" class="hidden mt-8">
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h3 class="text-xl font-bold text-amber-900 mb-6">Painel Administrativo</h3>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Menu Management -->
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Gerenciar Cardápio</h4>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                <span>Expresso - R$ 8,50</span>
+                                <button class="text-blue-600 hover:text-blue-800">Editar</button>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                <span>Cappuccino - R$ 12,00</span>
+                                <button class="text-blue-600 hover:text-blue-800">Editar</button>
+                            </div>
+                        </div>
+                        <button class="mt-4 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+                            + Adicionar Item
+                        </button>
+                    </div>
+                    
+                    <!-- Statistics -->
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Estatísticas</h4>
+                        <div class="space-y-3">
+                            <div class="p-3 bg-blue-50 rounded-lg">
+                                <div class="text-2xl font-bold text-blue-900">47</div>
+                                <div class="text-sm text-blue-600">Pedidos Hoje</div>
+                            </div>
+                            <div class="p-3 bg-green-50 rounded-lg">
+                                <div class="text-2xl font-bold text-green-900">R$ 1.247,50</div>
+                                <div class="text-sm text-green-600">Faturamento Hoje</div>
+                            </div>
+                            <div class="p-3 bg-purple-50 rounded-lg">
+                                <div class="text-2xl font-bold text-purple-900">Cappuccino</div>
+                                <div class="text-sm text-purple-600">Mais Vendido</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
+            <h3 class="text-2xl font-bold text-amber-900 mb-6">Entrar na Conta</h3>
+            <div class="space-y-4">
+                <input type="email" placeholder="Email" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-amber-500">
+                <input type="password" placeholder="Senha" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-amber-500">
+                <button onclick="login()" class="w-full bg-amber-600 hover:bg-amber-700 text-white py-3 rounded-lg font-semibold">
+                    Entrar
+                </button>
+                <button onclick="hideLogin()" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 rounded-lg">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let currentOrder = {
+            type: null,
+            size: 'pequeno',
+            milk: 'integral',
+            sweetener: 'açúcar',
+            flavors: [],
+            toppings: [],
+            basePrice: 0,
+            totalPrice: 0
+        };
+
+        let orderCounter = 1;
+        let favorites = [];
+        let orderHistory = [];
+        let isLoggedIn = false;
+
+        // Coffee type selection
+        function selectCoffeeType(type, price) {
+            currentOrder.type = type;
+            currentOrder.basePrice = price;
+            
+            // Update UI
+            document.querySelectorAll('.coffee-type-btn').forEach(btn => {
+                btn.classList.remove('border-amber-400', 'bg-amber-200');
+                btn.classList.add('border-transparent', 'bg-amber-100');
+            });
+            event.target.closest('.coffee-type-btn').classList.add('border-amber-400', 'bg-amber-200');
+            
+            updateCupVisualization();
+            updateOrderSummary();
+            calculatePrice();
+        }
+
+        // Size selection
+        function selectSize(size, extraPrice) {
+            currentOrder.size = size;
+            currentOrder.sizePrice = extraPrice;
+            
+            document.querySelectorAll('.size-btn').forEach(btn => {
+                btn.classList.remove('border-gray-400', 'bg-gray-200');
+                btn.classList.add('border-transparent', 'bg-gray-100');
+            });
+            event.target.classList.add('border-gray-400', 'bg-gray-200');
+            
+            updateCupVisualization();
+            updateOrderSummary();
+            calculatePrice();
+        }
+
+        // Milk selection
+        function selectMilk(milk, extraPrice) {
+            currentOrder.milk = milk;
+            currentOrder.milkPrice = extraPrice;
+            
+            document.querySelectorAll('.milk-btn').forEach(btn => {
+                btn.classList.remove('border-blue-400', 'bg-blue-200');
+                btn.classList.add('border-transparent', 'bg-blue-100');
+            });
+            event.target.classList.add('border-blue-400', 'bg-blue-200');
+            
+            updateCupVisualization();
+            updateOrderSummary();
+            calculatePrice();
+        }
+
+        // Sweetener selection
+        function selectSweetener(sweetener, extraPrice) {
+            currentOrder.sweetener = sweetener;
+            currentOrder.sweetenerPrice = extraPrice;
+            
+            document.querySelectorAll('.sweetener-btn').forEach(btn => {
+                btn.classList.remove('border-pink-400', 'bg-pink-200');
+                btn.classList.add('border-transparent', 'bg-pink-100');
+            });
+            event.target.classList.add('border-pink-400', 'bg-pink-200');
+            
+            updateOrderSummary();
+            calculatePrice();
+        }
+
+        // Flavor toggle
+        function toggleFlavor(flavor, price) {
+            const index = currentOrder.flavors.findIndex(f => f.name === flavor);
+            if (index > -1) {
+                currentOrder.flavors.splice(index, 1);
+            } else {
+                currentOrder.flavors.push({name: flavor, price: price});
+            }
+            
+            updateOrderSummary();
+            calculatePrice();
+        }
+
+        // Topping toggle
+        function toggleTopping(topping, price) {
+            const index = currentOrder.toppings.findIndex(t => t.name === topping);
+            if (index > -1) {
+                currentOrder.toppings.splice(index, 1);
+            } else {
+                currentOrder.toppings.push({name: topping, price: price});
+            }
+            
+            updateCupVisualization();
+            updateOrderSummary();
+            calculatePrice();
+        }
+
+        // Update cup visualization
+        function updateCupVisualization() {
+            const coffeeFill = document.getElementById('coffeeFill');
+            const milkLayer = document.getElementById('milkLayer');
+            
+            if (currentOrder.type) {
+                // Show coffee fill based on size
+                let fillHeight = currentOrder.size === 'pequeno' ? '60%' : 
+                               currentOrder.size === 'medio' ? '75%' : '90%';
+                coffeeFill.style.setProperty('--fill-height', fillHeight);
+                coffeeFill.style.height = fillHeight;
+                
+                // Show milk layer for milk-based drinks
+                if (['cappuccino', 'latte', 'mocha'].includes(currentOrder.type)) {
+                    milkLayer.style.opacity = '0.8';
+                } else {
+                    milkLayer.style.opacity = '0';
+                }
+            }
+            
+            // Show toppings
+            document.getElementById('chantilly').style.opacity = 
+                currentOrder.toppings.some(t => t.name === 'chantilly') ? '1' : '0';
+            document.getElementById('marshmallow').style.opacity = 
+                currentOrder.toppings.some(t => t.name === 'marshmallow') ? '1' : '0';
+            document.getElementById('calda').style.opacity = 
+                currentOrder.toppings.some(t => t.name === 'calda') ? '1' : '0';
+        }
+
+        // Update order summary
+        function updateOrderSummary() {
+            const summary = document.getElementById('orderSummary');
+            if (!currentOrder.type) {
+                summary.innerHTML = '<p>Selecione um tipo de café para começar</p>';
+                return;
+            }
+            
+            let html = `
+                <p><strong>${currentOrder.type.charAt(0).toUpperCase() + currentOrder.type.slice(1)}</strong> - ${currentOrder.size}</p>
+                <p>Leite: ${currentOrder.milk}</p>
+                <p>Adoçante: ${currentOrder.sweetener}</p>
+            `;
+            
+            if (currentOrder.flavors.length > 0) {
+                html += <p>Sabores: ${currentOrder.flavors.map(f => f.name).join(', ')}</p>;
+            }
+            
+            if (currentOrder.toppings.length > 0) {
+                html += <p>Coberturas: ${currentOrder.toppings.map(t => t.name).join(', ')}</p>;
+            }
+            
+            summary.innerHTML = html;
+        }
+
+        // Calculate total price
+        function calculatePrice() {
+            let total = currentOrder.basePrice || 0;
+            total += currentOrder.sizePrice || 0;
+            total += currentOrder.milkPrice || 0;
+            total += currentOrder.sweetenerPrice || 0;
+            total += currentOrder.flavors.reduce((sum, f) => sum + f.price, 0);
+            total += currentOrder.toppings.reduce((sum, t) => sum + t.price, 0);
+            
+            currentOrder.totalPrice = total;
+            document.getElementById('totalPrice').textContent = R$ ;{total.toFixed(2).replace('.', ',')};
+        }
+
+        // Add to favorites
+        function addToFavorites() {
+            if (!currentOrder.type) {
+                alert('Selecione um café primeiro!');
+                return;
+            }
+            
+            if (!isLoggedIn) {
+                alert('Faça login para salvar favoritos!');
+                showLogin();
+                return;
+            }
+            
+            const favorite = {...currentOrder, id: Date.now()};
+            favorites.push(favorite);
+            updateFavoritesList();
+            alert('Bebida salva nos favoritos!');
+        }
+
+        // Place order
+        function placeOrder() {
+            if (!currentOrder.type) {
+                alert('Selecione um café primeiro!');
+                return;
+            }
+            
+            const order = {
+                ...currentOrder,
+                id: orderCounter++,
+                timestamp: new Date(),
+                status: 'em preparo'
+            };
+            
+            orderHistory.push(order);
+            updateOrderHistory();
+            
+            // Show order status
+            document.getElementById('orderStatus').classList.remove('hidden');
+            document.getElementById('orderNumber').textContent = order.id.toString().padStart(3, '0');
+            
+            // Simulate order progression
+            setTimeout(() => {
+                document.getElementById('statusText').textContent = 'Bebida pronta para retirada';
+                document.getElementById('statusIndicator').classList.remove('bg-blue-500');
+                document.getElementById('statusIndicator').classList.add('bg-green-500');
+            }, 5000);
+            
+            setTimeout(() => {
+                document.getElementById('statusText').textContent = 'Pedido retirado';
+                document.getElementById('statusIndicator').classList.remove('bg-green-500', 'status-pulse');
+                document.getElementById('statusIndicator').classList.add('bg-gray-500');
+            }, 10000);
+            
+            alert('Pedido enviado para a cozinha!');
+        }
+
+        // Login functions
+        function showLogin() {
+            document.getElementById('loginModal').classList.remove('hidden');
+        }
+
+        function hideLogin() {
+            document.getElementById('loginModal').classList.add('hidden');
+        }
+
+        function login() {
+            isLoggedIn = true;
+            hideLogin();
+            document.getElementById('userAccount').classList.remove('hidden');
+            alert('Login realizado com sucesso!');
+        }
+
+        // Admin functions
+        function showAdmin() {
+            const isAdmin = confirm('Acesso administrativo. Continuar?');
+            if (isAdmin) {
+                document.getElementById('adminPanel').classList.remove('hidden');
+                document.getElementById('mainContent').classList.add('hidden');
+            }
+        }
+
+        // Update favorites list
+        function updateFavoritesList() {
+            const list = document.getElementById('favoritesList');
+            if (favorites.length === 0) {
+                list.innerHTML = '<p class="text-gray-500">Nenhum favorito salvo ainda</p>';
+                return;
+            }
+            
+            list.innerHTML = favorites.map(fav => `
+                <div class="p-3 bg-gray-50 rounded-lg">
+                    <div class="font-medium">${fav.type.charAt(0).toUpperCase() + fav.type.slice(1)} ${fav.size}</div>
+                    <div class="text-sm text-gray-600">R$ ${fav.totalPrice.toFixed(2).replace('.', ',')}</div>
+                </div>
+            `).join('');
+        }
+
+        // Update order history
+        function updateOrderHistory() {
+            const list = document.getElementById('orderHistory');
+            if (orderHistory.length === 0) {
+                list.innerHTML = '<p class="text-gray-500">Nenhum pedido anterior</p>';
+                return;
+            }
+            
+            list.innerHTML = orderHistory.slice(-5).reverse().map(order => `
+                <div class="p-3 bg-gray-50 rounded-lg">
+                    <div class="flex justify-between">
+                        <div class="font-medium">Pedido #${order.id.toString().padStart(3, '0')}</div>
+                        <div class="text-sm text-gray-600">R$ ${order.totalPrice.toFixed(2).replace('.', ',')}</div>
+                    </div>
+                    <div class="text-sm text-gray-600">${order.type.charAt(0).toUpperCase() + order.type.slice(1)} ${order.size}</div>
+                    <div class="text-xs text-gray-500">${order.timestamp.toLocaleDateString()}</div>
+                </div>
+            `).join('');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default selections
+            selectSize('pequeno', 0);
+            selectMilk('integral', 0);
+            selectSweetener('açúcar', 0);
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9684bdd5154af1d7',t:'MTc1NDA0NTA4MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

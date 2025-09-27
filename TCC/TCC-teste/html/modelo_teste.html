@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Café Premium - Loja Online</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Importação de fontes */
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        /* Configuração de fontes */
+        .font-display { 
+            font-family: 'Playfair Display', serif; 
+        }
+        .font-body { 
+            font-family: 'Inter', sans-serif; 
+        }
+        
+        /* Esconder barra de rolagem mas manter funcionalidade */
+        .overflow-x-auto {
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* Internet Explorer 10+ */
+        }
+        .overflow-x-auto::-webkit-scrollbar {
+            display: none; /* Safari e Chrome */
+        }
+        
+        /* Animações suaves */
+        .smooth-scroll {
+            scroll-behavior: smooth;
+        }
+        
+        /* Efeitos de hover aprimorados */
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        /* Gradientes personalizados */
+        .bg-coffee-gradient {
+            background: linear-gradient(135deg, #92400e 0%, #d97706 50%, #f59e0b 100%);
+        }
+        .bg-cream-gradient {
+            background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 50%, #fde68a 100%);
+        }
+        
+        /* Animação de pulso para o carrinho */
+        .cart-pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 font-body">
+    <!-- Header -->
+    <header class="bg-coffee-gradient shadow-2xl sticky top-0 z-40 backdrop-blur-sm">
+        <div class="container mx-auto px-6 py-5">
+            <div class="flex items-center justify-between">
+                <!-- Logo e Título -->
+                <div class="flex items-center space-x-4">
+                    <div class="text-5xl animate-bounce">☕</div>
+                    <div>
+                        <h1 class="text-3xl font-display font-bold text-white drop-shadow-lg">
+                            Café Premium
+                        </h1>
+                        <p class="text-amber-100 text-sm font-medium">
+                            Experiência única em cada xícara
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Carrinho -->
+                <div class="flex items-center space-x-6">
+                    <div id="cartIcon" 
+                         class="relative cursor-pointer bg-white/20 hover:bg-white/30 backdrop-blur-sm px-5 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg" 
+                         onclick="toggleCart()">
+                        <span class="text-white text-xl">🛒</span>
+                        <span id="cartCount" 
+                              class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center shadow-lg">
+                            0
+                        </span>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-amber-100 text-sm">Total</p>
+                        <span id="cartTotal" class="text-white font-bold text-lg">R$ 0,00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-16 bg-cream-gradient">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-display font-bold text-amber-900 mb-4">
+                Descubra Nossos 
+                <span class="text-orange-600">Cafés Especiais</span>
+            </h2>
+            <p class="text-lg text-amber-800 max-w-2xl mx-auto">
+                Grãos selecionados e preparados com amor para a melhor experiência
+            </p>
+        </div>
+    </section>
+
+    <!-- Cafés Especiais -->
+    <section class="py-16">
+        <div class="container mx-auto px-6">
+            <h3 class="text-3xl font-display font-bold text-center text-amber-900 mb-12">☕ Nossos Cafés</h3>
+            
+            <div class="relative">
+                <!-- Setas de navegação para cafés -->
+                <button id="coffeeLeftArrow" onclick="scrollCoffeeLeft()" 
+                        class="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 hover:bg-white backdrop-blur-sm border border-amber-200 rounded-full p-3 shadow-lg transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <svg class="w-6 h-6 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </button>
+                
+                <button id="coffeeRightArrow" onclick="scrollCoffeeRight()" 
+                        class="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 hover:bg-white backdrop-blur-sm border border-amber-200 rounded-full p-3 shadow-lg transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <svg class="w-6 h-6 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+                
+                <div id="coffeeContainer" class="overflow-x-auto pb-6">
+                    <div class="flex space-x-6 min-w-max">
+                    <div class="coffee-card bg-white rounded-3xl shadow-xl card-hover w-80 flex-shrink-0 border border-amber-100 overflow-hidden">
+                        <div class="bg-gradient-to-br from-amber-50 to-orange-50 p-4 text-center">
+                            <div class="text-7xl mb-2 filter drop-shadow-lg">☕</div>
+                            <div class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full inline-block">
+                                CLÁSSICO
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-2xl font-display font-bold text-amber-900 mb-3">Espresso Tradicional</h4>
+                            <p class="text-gray-600 mb-4 leading-relaxed">Café puro e intenso, extraído na pressão perfeita. Sabor marcante e aroma inconfundível.</p>
+                            <div class="flex items-center justify-between mb-6">
+                                <span class="text-3xl font-bold text-orange-600">R$ 4,50</span>
+                                <div class="flex items-center space-x-1">
+                                    <span class="text-yellow-400 text-lg">⭐⭐⭐⭐⭐</span>
+                                </div>
+                            </div>
+                            <button class="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl" onclick="addToCart('Espresso Tradicional', 4.50, '☕')">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="coffee-card bg-white rounded-3xl shadow-xl card-hover w-80 flex-shrink-0 border border-amber-100 overflow-hidden">
+                        <div class="bg-gradient-to-br from-amber-50 to-orange-50 p-4 text-center">
+                            <div class="text-7xl mb-2 filter drop-shadow-lg">🥛</div>
+                            <div class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full inline-block">
+                                POPULAR
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-2xl font-display font-bold text-amber-900 mb-3">Cappuccino Cremoso</h4>
+                            <p class="text-gray-600 mb-4 leading-relaxed">Espresso com leite vaporizado e espuma cremosa. Equilíbrio perfeito entre café e leite.</p>
+                            <div class="flex items-center justify-between mb-6">
+                                <span class="text-3xl font-bold text-orange-600">R$ 6,50</span>
+                                <div class="flex items-center space-x-1">
+                                    <span class="text-yellow-400 text-lg">⭐⭐⭐⭐⭐</span>
+                                </div>
+                            </div>
+                            <button class="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl" onclick="addToCart('Cappuccino Cremoso', 6.50, '🥛')">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="coffee-card bg-white rounded-3xl shadow-xl card-hover w-80 flex-shrink-0 border border-amber-100 overflow-hidden">
+                        <div class="bg-gradient-to-br from-amber-50 to-orange-50 p-4 text-center">
+                            <div class="text-7xl mb-2 filter drop-shadow-lg">🍼</div>
+                            <div class="bg-purple-100 text-purple-800 text-xs font-bold px-3 py-1 rounded-full inline-block">
+                                PREMIUM
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-2xl font-display font-bold text-amber-900 mb-3">Latte Artesanal</h4>
+                            <p class="text-gray-600 mb-4 leading-relaxed">Café suave com muito leite vaporizado. Textura sedosa e sabor delicado para momentos especiais.</p>
+                            <div class="flex items-center justify-between mb-6">
+                                <span class="text-3xl font-bold text-orange-600">R$ 7,00</span>
+                                <div class="flex items-center space-x-1">
+                                    <span class="text-yellow-400 text-lg">⭐⭐⭐⭐⭐</span>
+                                </div>
+                            </div>
+                            <button class="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl" onclick="addToCart('Latte Artesanal', 7.00, '🍼')">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="coffee-card bg-white rounded-3xl shadow-xl card-hover w-80 flex-shrink-0 border border-amber-100 overflow-hidden">
+                        <div class="bg-gradient-to-br from-amber-50 to-orange-50 p-4 text-center">
+                            <div class="text-7xl mb-2 filter drop-shadow-lg">🍫</div>
+                            <div class="bg-pink-100 text-pink-800 text-xs font-bold px-3 py-1 rounded-full inline-block">
+                                ESPECIAL
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-2xl font-display font-bold text-amber-900 mb-3">Mocha Premium</h4>
+                            <p class="text-gray-600 mb-4 leading-relaxed">Espresso com chocolate belga e leite vaporizado. Uma experiência indulgente e irresistível.</p>
+                            <div class="flex items-center justify-between mb-6">
+                                <span class="text-3xl font-bold text-orange-600">R$ 8,50</span>
+                                <div class="flex items-center space-x-1">
+                                    <span class="text-yellow-400 text-lg">⭐⭐⭐⭐⭐</span>
+                                </div>
+                            </div>
+                            <button class="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl" onclick="addToCart('Mocha Premium', 8.50, '🍫')">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="coffee-card bg-white rounded-3xl shadow-xl card-hover w-80 flex-shrink-0 border border-amber-100 overflow-hidden">
+                        <div class="bg-gradient-to-br from-amber-50 to-orange-50 p-4 text-center">
+                            <div class="text-7xl mb-2 filter drop-shadow-lg">🌊</div>
+                            <div class="bg-green-100 text-green-800 text-xs font-bold px-3 py-1 rounded-full inline-block">
+                                SUAVE
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-2xl font-display font-bold text-amber-900 mb-3">Americano Clássico</h4>
+                            <p class="text-gray-600 mb-4 leading-relaxed">Espresso diluído em água quente. Sabor intenso do café com corpo mais leve e suave.</p>
+                            <div class="flex items-center justify-between mb-6">
+                                <span class="text-3xl font-bold text-orange-600">R$ 5,00</span>
+                                <div class="flex items-center space-x-1">
+                                    <span class="text-yellow-400 text-lg">⭐⭐⭐⭐⭐</span>
+                                </div>
+                            </div>
+                            <button class="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl" onclick="addToCart('Americano Clássico', 5.00, '🌊')">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="coffee-card bg-white rounded-3xl shadow-xl card-hover w-80 flex-shrink-0 border border-amber-100 overflow-hidden">
+                        <div class="bg-gradient-to-br from-amber-50 to-orange-50 p-4 text-center">
+                            <div class="text-7xl mb-2 filter drop-shadow-lg">❄️</div>
+                            <div class="bg-cyan-100 text-cyan-800 text-xs font-bold px-3 py-1 rounded-full inline-block">
+                                GELADO
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-2xl font-display font-bold text-amber-900 mb-3">Frappé Gelado</h4>
+                            <p class="text-gray-600 mb-4 leading-relaxed">Café gelado batido com gelo e leite. Refrescante e cremoso, perfeito para dias quentes.</p>
+                            <div class="flex items-center justify-between mb-6">
+                                <span class="text-3xl font-bold text-orange-600">R$ 9,00</span>
+                                <div class="flex items-center space-x-1">
+                                    <span class="text-yellow-400 text-lg">⭐⭐⭐⭐⭐</span>
+                                </div>
+                            </div>
+                            <button class="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl" onclick="addToCart('Frappé Gelado', 9.00, '❄️')">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Acompanhamentos -->
+    <section class="py-16 bg-gradient-to-br from-orange-100 via-amber-100 to-yellow-100">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-display font-bold text-amber-900 mb-4">
+                    🍰 Acompanhamentos
+                </h3>
+            </div>
+            
+            <div class="relative">
+                <!-- Setas de navegação para cafés -->
+                <button id="coffeeLeftArrow" onclick="scrollCoffeeLeft()" 
+                        class="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 hover:bg-white backdrop-blur-sm border border-amber-200 rounded-full p-3 shadow-lg transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <svg class="w-6 h-6 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </button>
+                
+                <button id="coffeeRightArrow" onclick="scrollCoffeeRight()" 
+                        class="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 hover:bg-white backdrop-blur-sm border border-amber-200 rounded-full p-3 shadow-lg transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <svg class="w-6 h-6 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+                
+                <div id="coffeeContainer" class="overflow-x-auto pb-6">
+                    <div class="flex space-x-6 min-w-max">
+                    <div class="accompaniment-card bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 w-72 flex-shrink-0">
+                        <div class="p-6">
+                            <div class="text-5xl text-center mb-4">🥐</div>
+                            <h4 class="text-lg font-display font-bold text-amber-900 mb-2">Croissant Francês</h4>
+                            <p class="text-gray-600 mb-4">Massa folhada crocante e amanteigada, assada na hora.</p>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-xl font-bold text-orange-600">R$ 5,50</span>
+                            </div>
+                            <button class="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200" onclick="addToCart('Croissant Francês', 5.50, '🥐')">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="accompaniment-card bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 w-72 flex-shrink-0">
+                        <div class="p-6">
+                            <div class="text-5xl text-center mb-4">🍰</div>
+                            <h4 class="text-lg font-display font-bold text-amber-900 mb-2">Bolo de Chocolate</h4>
+                            <p class="text-gray-600 mb-4">Fatia generosa de bolo úmido com cobertura cremosa.</p>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-xl font-bold text-orange-600">R$ 7,50</span>
+                            </div>
+                            <button class="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200" onclick="addToCart('Bolo de Chocolate', 7.50, '🍰')">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="accompaniment-card bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 w-72 flex-shrink-0">
+                        <div class="p-6">
+                            <div class="text-5xl text-center mb-4">🍪</div>
+                            <h4 class="text-lg font-display font-bold text-amber-900 mb-2">Cookie Artesanal</h4>
+                            <p class="text-gray-600 mb-4">Biscoito crocante com gotas de chocolate belga.</p>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-xl font-bold text-orange-600">R$ 3,50</span>
+                            </div>
+                            <button class="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200" onclick="addToCart('Cookie Artesanal', 3.50, '🍪')">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="accompaniment-card bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 w-72 flex-shrink-0">
+                        <div class="p-6">
+                            <div class="text-5xl text-center mb-4">🥪</div>
+                            <h4 class="text-lg font-display font-bold text-amber-900 mb-2">Sanduíche Gourmet</h4>
+                            <p class="text-gray-600 mb-4">Pão artesanal com presunto parma e queijo brie.</p>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-xl font-bold text-orange-600">R$ 12,00</span>
+                            </div>
+                            <button class="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200" onclick="addToCart('Sanduíche Gourmet', 12.00, '🥪')">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="accompaniment-card bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 w-72 flex-shrink-0">
+                        <div class="p-6">
+                            <div class="text-5xl text-center mb-4">🧁</div>
+                            <h4 class="text-lg font-display font-bold text-amber-900 mb-2">Muffin de Blueberry</h4>
+                            <p class="text-gray-600 mb-4">Bolinho americano fofinho com frutas vermelhas.</p>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-xl font-bold text-orange-600">R$ 6,00</span>
+                            </div>
+                            <button class="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200" onclick="addToCart('Muffin de Blueberry', 6.00, '🧁')">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Carrinho Modal -->
+    <div id="cartModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-96 overflow-hidden">
+                <div class="p-6 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xl font-display font-bold text-amber-900">🛒 Seu Carrinho</h3>
+                        <button onclick="toggleCart()" class="text-gray-500 hover:text-gray-700">✕</button>
+                    </div>
+                </div>
+                <div id="cartItems" class="p-6 max-h-64 overflow-y-auto">
+                    <p class="text-gray-500 text-center">Seu carrinho está vazio</p>
+                </div>
+                <div class="p-6 border-t border-gray-200">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="font-semibold text-gray-800">Total:</span>
+                        <span id="modalTotal" class="text-xl font-bold text-orange-600">R$ 0,00</span>
+                    </div>
+                    <button id="checkoutBtn" class="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed" onclick="checkout()" disabled>
+                        Finalizar Compra
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== VARIÁVEIS GLOBAIS =====
+        let cart = [];
+        let total = 0;
+
+        // ===== INICIALIZAÇÃO =====
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartDisplay();
+            updateArrowStates();
+        });
+
+        // ===== FUNCIONALIDADES DE NAVEGAÇÃO COM SETAS =====
+        function scrollCoffeeLeft() {
+            const container = document.getElementById('coffeeContainer');
+            container.scrollBy({ left: -320, behavior: 'smooth' });
+            setTimeout(updateArrowStates, 300);
+        }
+
+        function scrollCoffeeRight() {
+            const container = document.getElementById('coffeeContainer');
+            container.scrollBy({ left: 320, behavior: 'smooth' });
+            setTimeout(updateArrowStates, 300);
+        }
+
+        function scrollSnackLeft() {
+            const container = document.getElementById('snackContainer');
+            container.scrollBy({ left: -290, behavior: 'smooth' });
+            setTimeout(updateArrowStates, 300);
+        }
+
+        function scrollSnackRight() {
+            const container = document.getElementById('snackContainer');
+            container.scrollBy({ left: 290, behavior: 'smooth' });
+            setTimeout(updateArrowStates, 300);
+        }
+
+        function updateArrowStates() {
+            // Atualizar setas dos cafés
+            const coffeeContainer = document.getElementById('coffeeContainer');
+            const coffeeLeftArrow = document.getElementById('coffeeLeftArrow');
+            const coffeeRightArrow = document.getElementById('coffeeRightArrow');
+            
+            if (coffeeContainer && coffeeLeftArrow && coffeeRightArrow) {
+                coffeeLeftArrow.disabled = coffeeContainer.scrollLeft <= 0;
+                coffeeRightArrow.disabled = coffeeContainer.scrollLeft >= (coffeeContainer.scrollWidth - coffeeContainer.clientWidth);
+            }
+            
+            // Atualizar setas dos acompanhamentos
+            const snackContainer = document.getElementById('snackContainer');
+            const snackLeftArrow = document.getElementById('snackLeftArrow');
+            const snackRightArrow = document.getElementById('snackRightArrow');
+            
+            if (snackContainer && snackLeftArrow && snackRightArrow) {
+                snackLeftArrow.disabled = snackContainer.scrollLeft <= 0;
+                snackRightArrow.disabled = snackContainer.scrollLeft >= (snackContainer.scrollWidth - snackContainer.clientWidth);
+            }
+        }
+
+        // ===== FUNCIONALIDADES DO CARRINHO =====
+        function addToCart(name, price, emoji) {
+            const existingItem = cart.find(item => item.name === name);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ name, price, emoji, quantity: 1 });
+            }
+            
+            updateCartDisplay();
+            showAddToCartFeedback(event.target);
+        }
+
+        function removeFromCart(name) {
+            const itemIndex = cart.findIndex(item => item.name === name);
+            if (itemIndex > -1) {
+                if (cart[itemIndex].quantity > 1) {
+                    cart[itemIndex].quantity -= 1;
+                } else {
+                    cart.splice(itemIndex, 1);
+                }
+            }
+            updateCartDisplay();
+        }
+
+        function showAddToCartFeedback(button) {
+            const originalText = button.innerHTML;
+            const originalClasses = button.className;
+            
+            button.innerHTML = '✓ Adicionado!';
+            button.className = button.className.replace(/from-amber-600|to-orange-600/g, 'from-green-500 to-green-600');
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.className = originalClasses;
+            }, 1200);
+        }
+
+        // ===== ATUALIZAÇÃO DA INTERFACE =====
+        function updateCartDisplay() {
+            const elements = {
+                cartCount: document.getElementById('cartCount'),
+                cartTotal: document.getElementById('cartTotal'),
+                cartItems: document.getElementById('cartItems'),
+                modalTotal: document.getElementById('modalTotal'),
+                checkoutBtn: document.getElementById('checkoutBtn')
+            };
+
+            // Calcular totais
+            total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+            // Atualizar elementos do header
+            elements.cartCount.textContent = itemCount;
+            elements.cartTotal.textContent = formatPrice(total);
+            elements.modalTotal.textContent = formatPrice(total);
+
+            // Adicionar animação ao carrinho quando há itens
+            if (itemCount > 0) {
+                elements.cartCount.parentElement.classList.add('cart-pulse');
+            } else {
+                elements.cartCount.parentElement.classList.remove('cart-pulse');
+            }
+
+            // Atualizar conteúdo do modal
+            updateCartModal(elements);
+        }
+
+        function updateCartModal(elements) {
+            if (cart.length === 0) {
+                elements.cartItems.innerHTML = `
+                    <div class="text-center py-8">
+                        <div class="text-6xl mb-4">🛒</div>
+                        <p class="text-gray-500">Seu carrinho está vazio</p>
+                        <p class="text-sm text-gray-400 mt-2">Adicione alguns cafés deliciosos!</p>
+                    </div>
+                `;
+                elements.checkoutBtn.disabled = true;
+            } else {
+                elements.cartItems.innerHTML = cart.map(item => `
+                    <div class="flex items-center justify-between py-3 border-b border-gray-100 hover:bg-gray-50 rounded-lg px-2 transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-3xl">${item.emoji}</span>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">${item.name}</h4>
+                                <p class="text-sm text-gray-600">${formatPrice(item.price)} x ${item.quantity}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="font-bold text-orange-600">${formatPrice(item.price * item.quantity)}</span>
+                            <button onclick="removeFromCart('${item.name}')" 
+                                    class="text-red-500 hover:text-red-700 hover:bg-red-50 p-1 rounded transition-colors" 
+                                    title="Remover item">
+                                🗑️
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+                elements.checkoutBtn.disabled = false;
+            }
+        }
+
+        // ===== UTILITÁRIOS =====
+        function formatPrice(price) {
+            return `R$ ${price.toFixed(2).replace('.', ',')}`;
+        }
+
+        function toggleCart() {
+            const modal = document.getElementById('cartModal');
+            modal.classList.toggle('hidden');
+        }
+
+        function checkout() {
+            if (cart.length === 0) return;
+
+            let orderSummary = `🎉 Pedido Confirmado!\n\n`;
+            orderSummary += `📋 Itens do Pedido:\n`;
+            
+            cart.forEach(item => {
+                orderSummary += `${item.emoji} ${item.name} x${item.quantity} - ${formatPrice(item.price * item.quantity)}\n`;
+            });
+            
+            orderSummary += `\n💰 Total: ${formatPrice(total)}`;
+            orderSummary += `\n\n🚚 Seu pedido será preparado em 15-20 minutos!`;
+            orderSummary += `\n📍 Retire no balcão ou aguarde a entrega`;
+            orderSummary += `\n\nObrigado pela preferência! ☕❤️`;
+
+            alert(orderSummary);
+            
+            // Limpar carrinho
+            cart = [];
+            updateCartDisplay();
+            toggleCart();
+        }
+    
+        (function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9795b2c2902ed986',t:'MTc1NjkwNzIzOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();
+    </script>
+</body>
+</html>

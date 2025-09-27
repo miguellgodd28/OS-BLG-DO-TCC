@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Carregando pedido - Cafeteria</title>
+<style>
+  /* Estilo base para centralizar conteúdo */
+  body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #6f4e37; /* Marrom café */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #fff;
+  }
+
+  /* Rodinha de carregamento */
+  .spinner {
+    border: 6px solid #d7c2a4; /* cor clara */
+    border-top: 6px solid #ffffff; /* cor branca para o efeito giratório */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+  }
+
+  /* Mensagem */
+  .message {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    max-width: 300px;
+  }
+</style>
+</head>
+<body>
+  <div class="spinner" role="status" aria-label="Carregando"></div>
+  <div class="message">Seu pedido está sendo preparado, aguarde um momento...</div>
+</body>
+</html>
